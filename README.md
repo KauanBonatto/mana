@@ -1,10 +1,10 @@
 # Mana
 Versão digital do jogo "Mana" criado em 1988, jogo de estratégia abstrata para dois jogadores.
 
-🕹️ Como jogar Mana 
+## 🕹️ Como jogar Mana 
 Cada jogador tem seis peças: cinco ronins e um daimyo, que funciona como o "rei" no xadrez. O tabuleiro possui casas “numeradas” de 1 a 3, determinando quantas casas uma peça pode se mover. E tem um detalhe: os movimentos sempre são ortogonais, podendo incluir viradas estratégicas para a direita!
 
-🏁 Objetivo
+## 🏁 Objetivo
 Capturar o daimyo do oponente! 
 
 1️⃣ Preparação do jogo:
