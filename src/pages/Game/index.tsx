@@ -42,22 +42,24 @@ const Game = () => {
             />
             <p>Fulano</p>
           </div>
-          <div className="mana-board w-full flex flex-col bg-purple-800 flex-grow">
-            <table>
-              <tbody>
-                {board.map((row, rowIndex) => (
-                  <tr key={`row-${rowIndex}`} className="row flex">
-                    {row.map((column, columnIndex) => (
-                      <td key={`column-${columnIndex}`} className="column">
-                        <div className="square w-full h-full">
-                          <p>{column.quantityMove}</p>
-                        </div>
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="mana-board w-full flex flex-col bg-purple-800 flex-grow max-h-full">
+            <div className="relative w-full h-full max-h-full">
+              <table className="w-auto h-full aspect-square bg-amber-300">
+                <tbody>
+                  {board.map((row, rowIndex) => (
+                    <tr key={`row-${rowIndex}`} className="row flex">
+                      {row.map((column, columnIndex) => (
+                        <td key={`column-${columnIndex}`} className="column">
+                          <div className="square w-full h-full">
+                            <p>{column.quantityMove}</p>
+                          </div>
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
           <div className="flex flex-none">
             <img
