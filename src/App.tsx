@@ -1,15 +1,13 @@
-import { Routes, Route } from 'react-router';
-
-import Home from './pages/Home';
-import Game from './pages/Game';
+import { Routes, Route } from "react-router";
+import { GameView, HomeView } from "./pages";
 
 function App() {
   return (
     <Routes>
-      <Route index element={<Home />} />
-      <Route path="/:gameId" element={<Game />} />
+      <Route index element={<HomeView />} />
+      <Route path="/:gameId" element={<GameView />} />
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;

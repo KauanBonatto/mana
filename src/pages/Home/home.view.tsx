@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router';
 
-const Home = () => {
+const HomeView = () => {
   return (
     <div>
       <h1>HOME</h1>
@@ -12,4 +12,4 @@ const Home = () => {
 };
 
 
-export default Home;
+export default HomeView;

@@ -5,7 +5,7 @@ interface Board {
   quantityMove: number;
 }
 
-const Game = () => {
+const GameView = () => {
   const [board, setBoard] = useState<Board[][]>([]);
   const { gameId } = useParams();
 
@@ -78,4 +78,4 @@ const Game = () => {
   );
 };
 
-export default Game;
+export default GameView;
