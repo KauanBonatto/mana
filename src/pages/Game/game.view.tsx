@@ -1,35 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router";
 
-interface Board {
-  quantityMove: number;
-}
+import type { ManaBoardProps } from "../../GameConfig";
 
 const GameView = () => {
-  const [board, setBoard] = useState<Board[][]>([]);
-
   const { gameId } = useParams();
 
-  function createManaBoard() {
-    const newBoard = [];
-
-    for (let row = 0; row < 6; row++) {
-      const newRow = [];
-
-      for (let column = 0; column < 6; column++) {
-        const square = {
-          quantityMove: 1,
-        };
-        newRow.push(square);
-      }
-      newBoard.push(newRow);
-    }
-    setBoard(newBoard);
-  }
-
-  useEffect(() => {
-    createManaBoard();
-  }, []);
+  const [board, setBoard] = useState<ManaBoardProps[][]>(window.ManaBoard);
 
   return (
     <div className="h-dvh w-screen bg-purple-400">
@@ -41,7 +18,6 @@ const GameView = () => {
               src="https://img.freepik.com/vetores-gratis/gradiente-azul-do-utilizador_78370-4692.jpg?semt=ais_hybrid"
               alt="Fulano"
             />
-            <p>Fulano</p>
           </div>
           <div className="mana-board w-full flex flex-col bg-purple-800 flex-grow max-h-full">
             <div className="relative w-full h-full max-h-full">
