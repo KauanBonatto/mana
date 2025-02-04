@@ -7,6 +7,7 @@ interface Board {
 
 const GameView = () => {
   const [board, setBoard] = useState<Board[][]>([]);
+
   const { gameId } = useParams();
 
   function createManaBoard() {
@@ -33,7 +34,7 @@ const GameView = () => {
   return (
     <div className="h-dvh w-screen bg-purple-400">
       <div className="w-full h-full flex p-4">
-        <div className="flex flex-col w-2/3">
+        <div className="flex flex-col w-full md:w-2/3">
           <div className="flex flex-none">
             <img
               width={50}
@@ -44,7 +45,7 @@ const GameView = () => {
           </div>
           <div className="mana-board w-full flex flex-col bg-purple-800 flex-grow max-h-full">
             <div className="relative w-full h-full max-h-full">
-              <table className="w-auto h-full aspect-square bg-amber-300">
+              <table className="h-auto w-full sm:w-auto sm:h-full aspect-square bg-amber-300">
                 <tbody>
                   {board.map((row, rowIndex) => (
                     <tr key={`row-${rowIndex}`} className="row flex">
@@ -70,7 +71,7 @@ const GameView = () => {
             <p>Ciclano</p>
           </div>
         </div>
-        <div className="w-1/3">
+        <div className="hidden md:w-1/3">
           <h1 className="text-white">{`GameID is: ${gameId}`}</h1>
         </div>
       </div>
