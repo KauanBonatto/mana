@@ -2,11 +2,25 @@ import { useState } from "react";
 import { useParams } from "react-router";
 
 import type { ManaBoardProps } from "../../GameConfig";
+import { OneMove, TheeMove, TwoMove } from "../../components";
 
 const GameView = () => {
   const { gameId } = useParams();
 
   const [board, setBoard] = useState<ManaBoardProps[][]>(window.ManaBoard);
+
+  function quantityMoveElement(quantityMove: number) {
+    switch (quantityMove) {
+      case 1:
+        return <OneMove />;
+      case 2:
+        return <TwoMove />;
+      case 3:
+        return <TheeMove />;
+      default:
+        <OneMove />;
+    }
+  }
 
   return (
     <div className="h-dvh w-screen bg-purple-400">
@@ -32,7 +46,7 @@ const GameView = () => {
                           className="column flex-1 p-0"
                         >
                           <div className="square w-full h-full flex items-center justify-center">
-                            <p>{column.quantityMove}</p>
+                            {quantityMoveElement(column.quantityMove)}
                           </div>
                         </td>
                       ))}
