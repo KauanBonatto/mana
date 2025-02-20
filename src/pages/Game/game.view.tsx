@@ -48,9 +48,10 @@ const GameView = () => {
     to: { row: number; col: number },
   ) => {
     const square = board[from.row][from.col];
+    const targetCell = board[to.row][to.col];
     if (!square) return;
 
-    const targetCell = board[to.row][to.col];
+    if (to.col < from.col) return false;
 
     const moveDistance =
       Math.abs(to.row - from.row) + Math.abs(to.col - from.col);
@@ -67,8 +68,8 @@ const GameView = () => {
       const validMove = isValidMove(selectedPiece, { row, col });
       if (validMove) {
         movePiece(selectedPiece, { row, col });
-        setSelectedPiece(null);
       }
+      setSelectedPiece(null);
     } else {
       const piece = board[row][col].piece;
       if (piece) {
