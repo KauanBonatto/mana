@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --color-blue-900: oklch(27.42% 0.1878 265.24);
+}
+
 body {
   margin: 0;
   padding: 0;
