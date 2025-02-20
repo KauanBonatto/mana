@@ -1,28 +1,13 @@
 import { useState } from "react";
 import { useParams } from "react-router";
-import roninWhite from "../../assets/pieces/ronin-white.svg"
-import roninBlack from "../../assets/pieces/ronin-black.svg"
-import daimyoWhite from "../../assets/pieces/daimyo-white.svg"
-import mana from "../../assets/pieces/mana.svg"
+import RONIN from "../../assets/pieces/ronin.svg"
+import DAIMYO from "../../assets/pieces/daimyo.svg"
 
 import type { ManaBoardProps } from "../../GameConfig";
 
 const GameView = () => {
   const { gameId } = useParams();
   const [board, setBoard] = useState<ManaBoardProps[][]>(window.ManaBoard);
-
-  function quantityMoveElement(quantityMove: number) {
-    switch (quantityMove) {
-      case 1:
-        return <img src={roninBlack} className="w-5 "/>;
-      case 2:
-        return <img src={daimyoWhite} className="w-5 "/>;
-      case 3:
-        return <img src={mana} className="w-5 "/>;
-      default:
-        <img src={roninBlack} className="w-5 "/>;
-    }
-  }
 
   return (
     <div className="h-dvh w-screen bg-blue-500">
@@ -47,8 +32,17 @@ const GameView = () => {
                           key={`column-${columnIndex}`}
                           className="column flex-1 p-0"
                         >
-                          <div className={`square w-full h-full flex items-center justify-center bg-blue-900 text-white ${column.className}`}>
-                            {quantityMoveElement(column.quantityMove)}
+                          <div
+                            className={`square w-full h-full flex items-center justify-center bg-blue-900 text-white ${column.className}`}
+                            onClick={() => console.log(column)}
+                          >
+                            {column.piece && (
+                              <img
+                                src={column.piece.type === 'RONIN' ? RONIN : DAIMYO}
+                                className={`w-5 ${column.piece.color === 'BLACK' ? 'brightness-0' : ''}`}
+                                alt={column.piece.type}
+                              />
+                            )}
                           </div>
                         </td>
                       ))}
@@ -71,7 +65,7 @@ const GameView = () => {
           <h1 className="text-white">{`GameID is: ${gameId}`}</h1>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
