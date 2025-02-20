@@ -1,29 +1,31 @@
 import { useState } from "react";
 import { useParams } from "react-router";
+import roninWhite from "../../assets/pieces/ronin-white.svg"
+import roninBlack from "../../assets/pieces/ronin-black.svg"
+import daimyoWhite from "../../assets/pieces/daimyo-white.svg"
+import mana from "../../assets/pieces/mana.svg"
 
 import type { ManaBoardProps } from "../../GameConfig";
-import { OneMove, TheeMove, TwoMove } from "../../components";
 
 const GameView = () => {
   const { gameId } = useParams();
-
   const [board, setBoard] = useState<ManaBoardProps[][]>(window.ManaBoard);
 
   function quantityMoveElement(quantityMove: number) {
     switch (quantityMove) {
       case 1:
-        return <OneMove />;
+        return <img src={roninBlack} className="w-5 "/>;
       case 2:
-        return <TwoMove />;
+        return <img src={daimyoWhite} className="w-5 "/>;
       case 3:
-        return <TheeMove />;
+        return <img src={mana} className="w-5 "/>;
       default:
-        <OneMove />;
+        <img src={roninBlack} className="w-5 "/>;
     }
   }
 
   return (
-    <div className="h-dvh w-screen bg-purple-400">
+    <div className="h-dvh w-screen bg-blue-500">
       <div className="w-full h-full flex p-4">
         <div className="flex flex-col w-full md:w-2/3">
           <div className="flex flex-none gap-x-2 font-normal">
@@ -34,9 +36,9 @@ const GameView = () => {
             />
             <p>Fulano</p>
           </div>
-          <div className="mana-board w-full flex flex-col bg-purple-800 flex-grow max-h-full">
+          <div className="mana-board w-full flex flex-col bg-blue-800 flex-grow max-h-full">
             <div className="relative w-full h-full max-h-full">
-              <table className="h-auto w-full sm:w-auto sm:h-full aspect-square bg-amber-300">
+              <table className="h-auto w-full sm:w-auto sm:h-full aspect-square bg-white">
                 <tbody className="flex flex-col h-full">
                   {board.map((row, rowIndex) => (
                     <tr key={`row-${rowIndex}`} className="row flex flex-1">
@@ -45,7 +47,7 @@ const GameView = () => {
                           key={`column-${columnIndex}`}
                           className="column flex-1 p-0"
                         >
-                          <div className="square w-full h-full flex items-center justify-center">
+                          <div className={`square w-full h-full flex items-center justify-center bg-blue-900 text-white ${column.className}`}>
                             {quantityMoveElement(column.quantityMove)}
                           </div>
                         </td>
