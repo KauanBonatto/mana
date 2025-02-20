@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router';
 import RONIN from '../../assets/pieces/ronin.svg';
 import DAIMYO from '../../assets/pieces/daimyo.svg';
+import MANA from '../../assets/pieces/mana.svg';
 import type { ManaBoardProps, pieceColor } from '../../GameConfig';
 
 const GameView = () => {
@@ -16,6 +17,7 @@ const GameView = () => {
     col: number;
   } | null>(null);
   const [currentPlayer, setCurrentPlayer] = useState<pieceColor>('WHITE');
+  const [lastQuantityMove, setLastQuantityMove] = useState<number | null>(null);
 
   const movePiece = (
     from: { row: number; col: number },
@@ -41,6 +43,7 @@ const GameView = () => {
 
     setBoard(newBoard);
     setCurrentPlayer(currentPlayer === 'WHITE' ? 'BLACK' : 'WHITE');
+    setLastQuantityMove(newBoard[to.row][to.col].quantityMove);
   };
 
   const isValidMove = (
@@ -51,8 +54,23 @@ const GameView = () => {
     const targetCell = board[to.row][to.col];
     if (!square) return;
 
-    if (to.col < from.col) return false;
+    if (currentPlayer === 'WHITE') {
+      if (to.col < from.col) return false;
+    } else if (from.col < to.col) return false;
 
+    /* const rowStep = to.row > from.row ? 1 : to.row < from.row ? -1 : 0;
+    const colStep = to.col > from.col ? 1 : to.col < from.col ? -1 : 0;
+
+    let currentRow = from.row + rowStep;
+    let currentCol = from.col + colStep;
+
+    while (currentRow !== to.row || currentCol !== to.col) {
+      if (board[currentRow][currentCol].piece) {
+        return false;
+      }
+      currentRow += rowStep;
+      currentCol += colStep;
+    } */
     const moveDistance =
       Math.abs(to.row - from.row) + Math.abs(to.col - from.col);
     if (moveDistance !== square.quantityMove) return false;
@@ -72,7 +90,7 @@ const GameView = () => {
       setSelectedPiece(null);
     } else {
       const piece = board[row][col].piece;
-      if (piece) {
+      if (piece && piece.color === currentPlayer) {
         setSelectedPiece({ row, col });
       }
     }
@@ -125,13 +143,23 @@ const GameView = () => {
               </table>
             </div>
           </div>
-          <div className="flex flex-none gap-x-2 font-normal">
-            <img
-              width={50}
-              src="https://img.freepik.com/vetores-gratis/gradiente-azul-do-utilizador_78370-4692.jpg?semt=ais_hybrid"
-              alt="Ciclano"
-            />
-            <p>Ciclano</p>
+          <div className="flex justify-between">
+            <div className="flex flex-none gap-x-2 font-normal">
+              <img
+                width={50}
+                src="https://img.freepik.com/vetores-gratis/gradiente-azul-do-utilizador_78370-4692.jpg?semt=ais_hybrid"
+                alt="Ciclano"
+              />
+              <p>Ciclano</p>
+            </div>
+            {lastQuantityMove && (
+              <div className="flex items-center gap-x-3 rounded-b-2xl bg-blue-600 px-4">
+                <div
+                  className={`h-full w-13 bg-[url(./assets/move-${lastQuantityMove}.svg)] bg-cover bg-no-repeat`}
+                ></div>
+                <img src={MANA} className={`w-5`} alt={'mana'} />
+              </div>
+            )}
           </div>
         </div>
         <div className="hidden md:w-1/3">
