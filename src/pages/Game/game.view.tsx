@@ -28,12 +28,10 @@ const GameView = () => {
 
     const targetCell = board[to.row][to.col];
     if (targetCell.piece && targetCell.piece.color !== piece.color) {
+      const capture = piece.color === 'WHITE' ? 'BLACK' : 'WHITE';
       setCapturedPieces((prevState) => ({
         ...prevState,
-        [piece.color === 'WHITE' ? 'BLACK' : 'WHITE']: [
-          ...prevState[piece.color === 'WHITE' ? 'BLACK' : 'WHITE'],
-          targetCell.piece,
-        ],
+        [capture]: [...prevState[capture], targetCell.piece],
       }));
     }
 
