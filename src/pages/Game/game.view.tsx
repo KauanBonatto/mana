@@ -19,8 +19,8 @@ const GameView = () => {
   const [lastQuantityMove, setLastQuantityMove] = useState<number | null>(null);
 
   const movePiece = (
-    from: { row: number; col: number },
-    to: { row: number; col: number },
+    from: SquarePositionProps,
+    to: SquarePositionProps,
   ) => {
     const piece = board[from.row][from.col].piece;
     if (!piece) return;
@@ -44,8 +44,8 @@ const GameView = () => {
   };
 
   const isValidMove = (
-    from: { row: number; col: number },
-    to: { row: number; col: number },
+    from: SquarePositionProps,
+    to: SquarePositionProps,
   ) => {
     const square = board[from.row][from.col];
     const targetCell = board[to.row][to.col];
