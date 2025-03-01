@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useParams } from 'react-router';
+
+import MANA from '../../assets/pieces/mana.svg';
 import RONIN from '../../assets/pieces/ronin.svg';
 import DAIMYO from '../../assets/pieces/daimyo.svg';
-import MANA from '../../assets/pieces/mana.svg';
-import type { ManaBoardProps, pieceColor } from '../../GameConfig';
+
+import type { ManaBoardProps, PieceColorType, SquarePositionProps } from '../../GameConfig';
 
 const GameView = () => {
   const { gameId } = useParams();
@@ -12,11 +14,8 @@ const GameView = () => {
     WHITE: [],
     BLACK: [],
   });
-  const [selectedPiece, setSelectedPiece] = useState<{
-    row: number;
-    col: number;
-  } | null>(null);
-  const [currentPlayer, setCurrentPlayer] = useState<pieceColor>('WHITE');
+  const [selectedPiece, setSelectedPiece] = useState<SquarePositionProps | null>(null);
+  const [currentPlayer, setCurrentPlayer] = useState<PieceColorType>('WHITE');
   const [lastQuantityMove, setLastQuantityMove] = useState<number | null>(null);
 
   const movePiece = (
@@ -80,17 +79,17 @@ const GameView = () => {
   };
 
   const handleCellClick = (row: number, col: number) => {
-    if (selectedPiece) {
-      const validMove = isValidMove(selectedPiece, { row, col });
-      if (validMove) {
-        movePiece(selectedPiece, { row, col });
-      }
+    if (selectedPiece && isValidMove(selectedPiece, { row, col })) {
+      movePiece(selectedPiece, { row, col });
       setSelectedPiece(null);
-    } else {
-      const piece = board[row][col].piece;
-      if (piece && piece.color === currentPlayer) {
-        setSelectedPiece({ row, col });
-      }
+      return;
+    }
+
+    if (selectedPiece?.row == row && selectedPiece.col == col) return setSelectedPiece(null);
+
+    const piece = board[row][col].piece;
+    if (piece && piece.color === currentPlayer) {
+      setSelectedPiece({ row, col });
     }
   };
 
@@ -115,7 +114,7 @@ const GameView = () => {
                       {row.map((column, columnIndex) => (
                         <td
                           key={`column-${columnIndex}`}
-                          className="column flex-1 p-0"
+                          className="column flex-1 p-0 cursor-pointer"
                         >
                           <div
                             className={`square flex h-full w-full items-center justify-center ${selectedPiece && selectedPiece?.row === rowIndex && selectedPiece?.col === columnIndex ? 'bg-blue-600/90' : ''} text-white ${column.className}`}

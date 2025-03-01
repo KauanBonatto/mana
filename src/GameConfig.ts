@@ -1,15 +1,20 @@
-export type pieceColor = 'BLACK' | 'WHITE';
+export type PieceColorType = 'BLACK' | 'WHITE';
 
 export interface ManaBoardProps {
+  piece: PieceProps | null;
   quantityMove: number;
-  piece: piece | null;
   className: string;
 }
 
-type piece = {
+interface PieceProps {
   type: 'RONIN' | 'DAIMYO';
-  color: pieceColor;
+  color: PieceColorType;
 };
+
+export interface SquarePositionProps {
+  row: number;
+  col: number;
+}
 
 declare global {
   interface Window {
