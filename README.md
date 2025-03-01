@@ -11,7 +11,7 @@ Capturar o daimyo do oponente!
 Cada jogador posiciona suas peças no lado oposto do tabuleiro, sendo obrigatório colocar o daimyo em uma casa numerada com "2".
 
 ## 2️⃣ Regras de movimento:
-A peça se move de acordo com o número da casa em que está (1, 2 ou 3) e pode virar para a direita durante o movimento.
+A peça se move de acordo com o número da casa em que está (1, 2 ou 3) e pode virar apenas para a direita durante o movimento.
 
 ## 3️⃣ Estratégia em ação:
 O próximo jogador deve mover uma peça que esteja na casa onde o pássaro Mana está posicionado.

@@ -95,9 +95,9 @@ const GameView = () => {
   };
 
   return (
-    <div className="h-dvh w-screen bg-blue-500">
-      <div className="flex h-full w-full p-4">
-        <div className="flex w-full flex-col md:w-2/3">
+    <div className="h-dvh w-screen">
+      <div className="flex h-full w-full p-4 ">
+        <div className="flex w-full flex-col gap-4">
           <div className="flex flex-none gap-x-2 font-normal">
             <img
               width={50}
@@ -106,30 +106,27 @@ const GameView = () => {
             />
             <p>Fulano</p>
           </div>
-          <div className="mana-board flex max-h-full w-full flex-grow flex-col bg-blue-800">
-            <div className="relative h-full max-h-full w-full">
-              <table className="aspect-square h-auto w-full bg-white sm:h-full sm:w-auto">
-                <tbody className="flex h-full flex-col">
+          <div className="mana-board flex-grow flex-col">
+            <table className="aspect-square h-auto w-full sm:h-full sm:w-auto">
+              <div className='w-full sm:h-full sm:w-auto p-6 bg-blue-300'>
+                <tbody className="flex h-full flex-col bg-blue-400">
                   {board.map((row, rowIndex) => (
-                    <tr key={`row-${rowIndex}`} className="row flex flex-1">
+                    <tr key={`row-${rowIndex}`} className={`row flex flex-1 [&>*:nth-child(${(rowIndex + 1) % 2 ? 'odd' : '2n'})]:bg-blue-500`}>
                       {row.map((column, columnIndex) => (
                         <td
                           key={`column-${columnIndex}`}
                           className="column flex-1 p-0"
                         >
                           <div
-                            className={`square flex h-full w-full items-center justify-center bg-blue-900 ${selectedPiece && selectedPiece?.row === rowIndex && selectedPiece?.col === columnIndex ? 'bg-blue-900/90' : ''} text-white ${column.className}`}
-                            onClick={() =>
-                              handleCellClick(rowIndex, columnIndex)
-                            }
+                            className={`square flex h-full w-full items-center justify-center ${selectedPiece && selectedPiece?.row === rowIndex && selectedPiece?.col === columnIndex ? 'bg-blue-600/90' : ''} text-white ${column.className}`}
+                            onClick={() => handleCellClick(rowIndex, columnIndex)}
                           >
                             {column.piece && (
                               <img
-                                src={
-                                  column.piece.type === 'RONIN' ? RONIN : DAIMYO
-                                }
-                                className={`w-5 ${column.piece.color === 'BLACK' ? 'brightness-0' : ''}`}
+                                draggable={false}
                                 alt={column.piece.type}
+                                src={column.piece.type === 'RONIN' ? RONIN : DAIMYO}
+                                className={`w-6 ${column.piece.color === 'BLACK' ? 'brightness-0' : ''}`}
                               />
                             )}
                           </div>
@@ -138,8 +135,20 @@ const GameView = () => {
                     </tr>
                   ))}
                 </tbody>
-              </table>
-            </div>
+              </div>
+
+              {lastQuantityMove && (
+                <div className="flex justify-end items-center">
+                  <div className='flex rounded-b-2xl gap-x-3 justify-center items-center px-4 bg-blue-600'>
+                    <div
+                      className={`h-13 w-13 bg-[url(./assets/move-${lastQuantityMove}.svg)] bg-cover bg-no-repeat`}
+                    ></div>
+                    <img draggable={false} src={MANA} className='w-5' alt='mana' />
+                    </div>
+                </div>
+              )}
+            </table>
+
           </div>
           <div className="flex justify-between">
             <div className="flex flex-none gap-x-2 font-normal">
@@ -150,14 +159,6 @@ const GameView = () => {
               />
               <p>Ciclano</p>
             </div>
-            {lastQuantityMove && (
-              <div className="flex items-center gap-x-3 rounded-b-2xl bg-blue-600 px-4">
-                <div
-                  className={`h-full w-13 bg-[url(./assets/move-${lastQuantityMove}.svg)] bg-cover bg-no-repeat`}
-                ></div>
-                <img src={MANA} className={`w-5`} alt={'mana'} />
-              </div>
-            )}
           </div>
         </div>
         <div className="hidden md:w-1/3">

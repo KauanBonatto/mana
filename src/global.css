@@ -4,6 +4,10 @@
   --color-blue-900: oklch(27.42% 0.1878 265.24);
 }
 
+* {
+  user-select: none;
+}
+
 body {
   margin: 0;
   padding: 0;
