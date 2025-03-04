@@ -43,6 +43,21 @@ const GameView = () => {
     setLastQuantityMove(newBoard[to.row][to.col].quantityMove);
   };
 
+  const checkPieceByMove = (lastQuantityMove: number | null) => {
+    if (lastQuantityMove === null) return false;
+    const colorPlayer = currentPlayer === 'WHITE' ? 'BLACK' : 'WHITE';
+
+    const foundPiece = board.some((row) =>
+      row.some(
+        (cell) =>
+          cell.quantityMove === lastQuantityMove &&
+          cell.piece !== null &&
+          cell.piece.color === colorPlayer,
+      ),
+    );
+    return foundPiece;
+  };
+
   const isValidMove = (
     from: SquarePositionProps,
     to: SquarePositionProps,
@@ -55,25 +70,17 @@ const GameView = () => {
       if (to.col < from.col) return false;
     } else if (from.col < to.col) return false;
 
-    /* const rowStep = to.row > from.row ? 1 : to.row < from.row ? -1 : 0;
-    const colStep = to.col > from.col ? 1 : to.col < from.col ? -1 : 0;
-
-    let currentRow = from.row + rowStep;
-    let currentCol = from.col + colStep;
-
-    while (currentRow !== to.row || currentCol !== to.col) {
-      if (board[currentRow][currentCol].piece) {
-        return false;
-      }
-      currentRow += rowStep;
-      currentCol += colStep;
-    } */
     const moveDistance =
       Math.abs(to.row - from.row) + Math.abs(to.col - from.col);
-    if (moveDistance !== square.quantityMove) return false;
-
-    if (targetCell.piece && targetCell.piece.color === square.piece?.color)
+    if (
+      moveDistance !== square.quantityMove ||
+      (lastQuantityMove && moveDistance !== lastQuantityMove)
+    )
       return false;
+
+    if (!checkPieceByMove(lastQuantityMove))
+      if (targetCell.piece && targetCell.piece.color === square.piece?.color)
+        return false;
 
     return true;
   };
